@@ -8,4 +8,9 @@ The purpose of this program is rather simple, given the addition of many differe
 Given your steamID, the program search for your current match, starts a timer and reminds you to pick up that rune you almost surely forgot about.
 
 
+### Practically
 
+The application is always checking for a match, every 30s or so checks if the user is in a match. 
+
+- if in a match: retrieve the time of the match and start a counter.
+- else: sleep. 
