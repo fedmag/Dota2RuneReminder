@@ -1,13 +1,21 @@
+from components.countdown import CountDown
+from components.event import Event
+from sounds.speaker import Speaker
 
-from countdown import CountDown
-from event import Event
 
-countdowns = [CountDown(Event("lotus rune", 5)), CountDown(Event("wisdom rune", 10))]
+countdowns = [
+    CountDown(Event("lotus and gold runes", 3*60)), 
+    CountDown(Event("wisdom rune", 7*60))
+]
+
+speaker = Speaker()
 try:
-    while True:
-        for countdown in countdowns:
-            if not countdown.is_running:
-                countdown.run_timer()
+    while True: 
+        for countdwn in countdowns:
+            if (countdwn.should_sound_alarm()):
+                speaker.say(countdwn.get_event_name())
+
+
 except KeyboardInterrupt:
     print("Interruption signal sent.")
     pass
