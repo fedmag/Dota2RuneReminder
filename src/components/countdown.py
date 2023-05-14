@@ -23,3 +23,8 @@ class CountDown:
     
     def get_event_name(self):
         return self.__event.name
+    
+    def handle_time(self, game_clock: int) -> bool:
+        if game_clock % self.__event.amount == 0:
+            return True
+        return False
