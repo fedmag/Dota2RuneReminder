@@ -56,12 +56,8 @@ class ServerManager(threading.Thread):
         self.add_handlers_to_server([clock_handler])
         log.info(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
         if len(self.server.handlers) == 0:
-            print("Warning: no handlers were added, nothing will happen")
-        try:
-            self.server.serve_forever()
-        except (KeyboardInterrupt, SystemExit):
-            pass
-        # self.server.server_close()
+            log.warning("Warning: no handlers were added, nothing will happen")
+        self.server.serve_forever()
 
     def on_update(self, func):
         """ Sets the function to be called when a new state is available.
@@ -79,7 +75,6 @@ class ServerManager(threading.Thread):
     def join(self, timeout: float | None = None) -> None:
         log.info("Join signal received")
         return super().join(timeout)
-    
     
     def stop(self):
         log.info("Stop signal received..")
