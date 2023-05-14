@@ -37,8 +37,6 @@ try:
                 print(game_clock)
                 speaker.say(countdown.get_event_name())
 
-
-
 except KeyboardInterrupt:
     log.info("Interruption signal sent.")
     server.stop()
