@@ -1,17 +1,21 @@
 """ dota2gsi.py """
 from collections.abc import Callable, Iterable, Mapping
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import queue
 from json import loads as json_loads
 from typing import Any
 from .handlers import clock_handler
 import threading
+import logging
+
+log = logging.getLogger(__name__)
 
 class CustomServer(ThreadingHTTPServer):
     
     def init_state(self, event_queue):
-        self.last_state = None
+        self.last_state: str | None = None
         self.handlers = []
-        self.q = event_queue
+        self.q : queue.Queue = event_queue
 
     def handle_state(self, state):
         for handler in self.handlers:
@@ -30,8 +34,8 @@ class CustomRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
         handler_response = self.server.handle_state(state) # type: ignore
         if handler_response is not None:
-            self.server.q.put_nowait(handler_response)
-        self.server.last_state = state # type: ignore
+            self.server.q.put_nowait(handler_response) # type: ignore
+        self.server.last_state = state  # type: ignore
 
     def log_message(self, format, *args):
         """ Don't print status messages """
@@ -39,7 +43,7 @@ class CustomRequestHandler(BaseHTTPRequestHandler):
 
 class ServerManager(threading.Thread):
     
-    def __init__(self, group: None = None, target: Callable[..., object] | None = None, name: str | None = None, args: Iterable[Any] = ..., kwargs: Mapping[str, Any] | None = None, *, daemon: bool | None = None, ip='0.0.0.0', port=3000, q = None) -> None:
+    def __init__(self, group: None = None, target: Callable[..., object] | None = None, name: str | None = None, args: Iterable[Any] = ..., kwargs: Mapping[str, Any] | None = None, *, daemon: bool | None = None, ip='0.0.0.0', port=3000, q: queue.Queue) -> None:
         super().__init__(group, target, name, args, kwargs, daemon=daemon)
         self.ip = ip
         self.port = port
@@ -50,15 +54,14 @@ class ServerManager(threading.Thread):
     def run(self):
         self.server.init_state(self.q)
         self.add_handlers_to_server([clock_handler])
-        print(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
+        log.info(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
         if len(self.server.handlers) == 0:
             print("Warning: no handlers were added, nothing will happen")
         try:
             self.server.serve_forever()
         except (KeyboardInterrupt, SystemExit):
             pass
-        self.server.server_close()
-        print("Server stopped.")
+        # self.server.server_close()
 
     def on_update(self, func):
         """ Sets the function to be called when a new state is available.
@@ -74,14 +77,13 @@ class ServerManager(threading.Thread):
             self.on_update(handler)
             
     def join(self, timeout: float | None = None) -> None:
-        print("Join signal received")
+        log.info("Join signal received")
         return super().join(timeout)
     
     
     def stop(self):
-        print("Stop signal received")
-        # self.server.server_close()
-        print("server close")
+        log.info("Stop signal received..")
+        log.info("..shutting down server..")
         self.server.shutdown()
-        print("Server stopped")
+        log.info("..server stopped!")
 

@@ -4,19 +4,21 @@ from sounds.speaker import Speaker
 from gsi.server import ServerManager
 from threading import Thread
 from queue import Queue
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
+
 
 
 
 countdowns = [
-    CountDown(Event("lotus and gold runes spawning", 5)), 
-    CountDown(Event("wisdom rune spawning", 20))
+    CountDown(Event("lotus and gold runes spawning in 15 seconds", 3*60)), 
+    CountDown(Event("wisdom rune spawning 15 seconds", 7*60))
 ]
 
 server = ServerManager(q = Queue())
 server.start()
-# thread = Thread(target=server.start, args=(event_queue,))
-# thread.start()
-
 
 speaker = Speaker()
 speaker.say("Counters are set!")
@@ -25,15 +27,21 @@ speaker.say("Counters are set!")
 try:
     while True: 
         game_clock = server.q.get()
+
+        if game_clock is None: 
+            print("Emty event queue")
+            continue
+        log.debug(game_clock)
         for countdown in countdowns:
             if countdown.handle_time(game_clock):
                 print(game_clock)
                 speaker.say(countdown.get_event_name())
-        pass
+
 
 
 except KeyboardInterrupt:
-    print("Interruption signal sent.")
+    log.info("Interruption signal sent.")
     server.stop()
-    print("Program stopped")
+    speaker.stop()
+    log.info("Program stopped")
     pass

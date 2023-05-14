@@ -10,3 +10,8 @@ class Speaker:
         print(f"Saying: {sentence}")
         self.tts.say(sentence)
         self.tts.runAndWait()
+        
+    def stop(self):
+        print("Stopping tts..")
+        self.tts.stop()
+        print("..tts stopped!")
