@@ -4,7 +4,6 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import queue
 from json import loads as json_loads
 from typing import Any
-from .handlers import clock_handler
 import threading
 import logging
 
@@ -32,10 +31,11 @@ class CustomRequestHandler(BaseHTTPRequestHandler):
         self.send_header('Content-type', 'text/html')
         self.send_response(200)
         self.end_headers()
-        handler_response = self.server.handle_state(state) # type: ignore
-        if handler_response is not None:
-            self.server.q.put_nowait(handler_response) # type: ignore
-        self.server.last_state = state  # type: ignore
+        self.server.q.put_nowait(state) # type: ignore
+        # handler_response = self.server.handle_state(state) # type: ignore
+        # if handler_response is not None:
+        #     self.server.q.put_nowait(handler_response) # type: ignore
+        # self.server.last_state = state  # type: ignore
 
     def log_message(self, format, *args):
         """ Don't print status messages """
@@ -53,7 +53,7 @@ class ServerManager(threading.Thread):
 
     def run(self):
         self.server.init_state(self.q)
-        self.add_handlers_to_server([clock_handler])
+        # self.add_handlers_to_server([clock_handler])
         log.info(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
         if len(self.server.handlers) == 0:
             log.warning("Warning: no handlers were added, nothing will happen")

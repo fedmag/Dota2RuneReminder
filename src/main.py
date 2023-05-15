@@ -1,5 +1,7 @@
 from components.countdown import CountDown
 from components.event import Event
+from components.event_handlers.clock_handler import ClockEventHandler
+from components.event_handlers.handlers_manager import HandlerManager
 from sounds.speaker import Speaker
 from gsi.server import ServerManager
 from threading import Thread
@@ -20,21 +22,19 @@ countdowns = [
 server = ServerManager(q = Queue())
 server.start()
 
+handlerManager = HandlerManager()
+handlerManager.add_handler(ClockEventHandler())
+
 speaker = Speaker()
 speaker.say("Counters are set!")
 
 
 try:
     while True: 
-        game_clock = server.q.get()
-
-        if game_clock is None: 
-            print("Emty event queue")
-            continue
-        log.debug(game_clock)
+        
+        handlerManager.handle_event(server.q.get())
         for countdown in countdowns:
-            if countdown.handle_time(game_clock):
-                print(game_clock)
+            if countdown.handle_time(1):
                 speaker.say(countdown.get_event_name())
 
 except KeyboardInterrupt:

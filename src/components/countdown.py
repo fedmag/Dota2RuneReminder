@@ -15,7 +15,7 @@ class CountDown:
         return self.__event.name
     
     def handle_time(self, game_clock: int) -> bool:
-        log.debug(f"game with offset: {game_clock + self.OFFSET} - amount {self.__event.amount} -  modulo:  {(game_clock + self.OFFSET) % self.__event.amount} ")
+        # log.debug(f"game with offset: {game_clock + self.OFFSET} - amount {self.__event.amount} -  modulo:  {(game_clock + self.OFFSET) % self.__event.amount} ")
         if (game_clock + self.OFFSET) % self.__event.amount == 0:
             return True
         return False

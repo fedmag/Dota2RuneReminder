@@ -1,4 +1,7 @@
 import pyttsx3
+import logging
+
+log = logging.getLogger(__name__)
 
 class Speaker:
 
@@ -7,11 +10,11 @@ class Speaker:
         
 
     def say(self, sentence: str) -> None:
-        print(f"Saying: {sentence}")
+        log.info(f"Saying: {sentence}")
         self.tts.say(sentence)
         self.tts.runAndWait()
         
     def stop(self):
-        print("Stopping tts..")
+        log.info("Stopping tts..")
         self.tts.stop()
-        print("..tts stopped!")
+        log.info("..tts stopped!")
