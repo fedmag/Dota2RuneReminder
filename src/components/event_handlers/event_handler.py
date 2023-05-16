@@ -3,7 +3,7 @@ import abc
 class EventHandlerInterface(abc.ABC):
     
     @abc.abstractmethod
-    def handle_event(self, event) -> None:
+    def handle_state(self, state) -> None:
         raise NotImplementedError
     
     @abc.abstractmethod
