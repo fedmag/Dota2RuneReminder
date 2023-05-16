@@ -18,7 +18,6 @@ class CustomServer(ThreadingHTTPServer):
 
     def handle_state(self, state):
         for handler in self.handlers:
-            # print(f"Calling handler {handler.__name__}")
             return handler(self.last_state, state)
 
 
@@ -32,10 +31,6 @@ class CustomRequestHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.server.q.put_nowait(state) # type: ignore
-        # handler_response = self.server.handle_state(state) # type: ignore
-        # if handler_response is not None:
-        #     self.server.q.put_nowait(handler_response) # type: ignore
-        # self.server.last_state = state  # type: ignore
 
     def log_message(self, format, *args):
         """ Don't print status messages """
@@ -55,27 +50,8 @@ class ServerManager(threading.Thread):
         self.server.init_state(self.q)
         # self.add_handlers_to_server([clock_handler])
         log.info(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
-        if len(self.server.handlers) == 0:
-            log.warning("Warning: no handlers were added, nothing will happen")
         self.server.serve_forever()
 
-    def on_update(self, func):
-        """ Sets the function to be called when a new state is available.
-        
-        The function must accept two arguments:
-            last_state - the previous state
-            state - the new state
-        """
-        self.server.handlers.append(func)
-
-    def add_handlers_to_server(self, handlers: list):
-        for handler in handlers:
-            self.on_update(handler)
-            
-    def join(self, timeout: float | None = None) -> None:
-        log.info("Join signal received")
-        return super().join(timeout)
-    
     def stop(self):
         log.info("Stop signal received..")
         log.info("..shutting down server..")
