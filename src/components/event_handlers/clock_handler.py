@@ -21,17 +21,20 @@ class ClockEventHandler(EventHandlerInterface):
         super().__init__()
         self.last_state: Any = None
         self.handler_name : str = "Clock handler"
+        self.game_clock: int = 0
         
-    def handle_event(self, event):
+    def handle_event(self, event) -> None:
         if self.states_are_usable(event):
             new_clock = event.get("map").get("clock_time")
             last_clock = self.last_state.get("map").get("clock_time")
             if last_clock != new_clock:
                 log.info(new_clock)
                 self.last_state = event
-                return new_clock
+                self.game_clock = new_clock
         self.last_state = event
-        return None
+        
+    def get_game_clock(self) -> int:
+        return self.game_clock
     
     def states_are_usable(self, state):
         return self.last_state is not None and state is not None and state.get("map") is not None and self.last_state.get("map") is not None

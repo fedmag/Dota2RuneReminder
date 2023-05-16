@@ -15,8 +15,9 @@ log = logging.getLogger(__name__)
 
 
 countdowns = [
-    CountDown(Event("lotus and gold runes spawning in 15 seconds", 3*60)), 
-    CountDown(Event("wisdom rune spawning 15 seconds", 7*60))
+    CountDown(Event("Lotus and gold runes spawning in 15 seconds", 3*60)), 
+    CountDown(Event("Wisdom rune spawning 15 seconds", 7*60)),
+    CountDown(Event("Tormentor spawned", 20*60)) # TODO this is a one time event
 ]
 
 server = ServerManager(q = Queue())
@@ -25,16 +26,20 @@ server.start()
 handlerManager = HandlerManager()
 handlerManager.add_handler(ClockEventHandler())
 
+clock_handler = ClockEventHandler()
+
 speaker = Speaker()
 speaker.say("Counters are set!")
 
 
 try:
     while True: 
-        
-        handlerManager.handle_event(server.q.get())
+        state: str = server.q.get()
+        # handlerManager.handle_event(state)
+        clock_handler.handle_event(state)
+        game_clock = clock_handler.get_game_clock()
         for countdown in countdowns:
-            if countdown.handle_time(1):
+            if countdown.handle_time(game_clock):
                 speaker.say(countdown.get_event_name())
 
 except KeyboardInterrupt:
