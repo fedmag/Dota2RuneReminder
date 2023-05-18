@@ -3,7 +3,9 @@ from components.event import Event
 from components.event_handlers.clock_handler import ClockEventHandler
 from sounds.speaker import Speaker
 from gsi.server import ServerManager
+from ui.GUI import run_gui 
 from queue import Queue
+import tkinter
 import logging
 
 logging.basicConfig(level=logging.INFO)
@@ -27,8 +29,7 @@ def run():
 
     speaker = Speaker()
     speaker.say("Counters are set!")
-
-
+    
     try:
         while True: 
             state: str = server.q.get()
@@ -46,4 +47,8 @@ def run():
         pass
 
 if __name__ == "__main__":
+    import threading
+    thd = threading.Thread(target=run_gui)   # gui thread
+    thd.daemon = True  # background thread will exit if main thread exits
+    thd.start()  # start tk loop
     run()
