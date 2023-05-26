@@ -1,6 +1,6 @@
 """ dota2gsi.py """
 from collections.abc import Callable, Iterable, Mapping
-from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer, HTTPServer
 import queue
 from json import loads as json_loads
 from typing import Any
@@ -9,17 +9,10 @@ import logging
 
 log = logging.getLogger(__name__)
 
-class CustomServer(ThreadingHTTPServer):
+class CustomServer(HTTPServer):
     
     def init_state(self, event_queue):
-        self.last_state: str | None = None
-        self.handlers = []
         self.q : queue.Queue = event_queue
-
-    def handle_state(self, state):
-        for handler in self.handlers:
-            return handler(self.last_state, state)
-
 
 class CustomRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -38,8 +31,9 @@ class CustomRequestHandler(BaseHTTPRequestHandler):
 
 class ServerManager(threading.Thread):
     
-    def __init__(self, group: None = None, target: Callable[..., object] | None = None, name: str | None = None, args: Iterable[Any] = ..., kwargs: Mapping[str, Any] | None = None, *, daemon: bool | None = None, ip='0.0.0.0', port=3000, q: queue.Queue) -> None:
-        super().__init__(group, target, name, args, kwargs, daemon=daemon)
+    def __init__(self, q: queue.Queue, ip='0.0.0.0', port=3000) -> None:
+        threading.Thread.__init__(self)
+        self.daemon = True
         self.ip = ip
         self.port = port
         self.q = q
@@ -48,9 +42,9 @@ class ServerManager(threading.Thread):
 
     def run(self):
         self.server.init_state(self.q)
-        # self.add_handlers_to_server([clock_handler])
         log.info(f"DotA 2 GSI server listening on {self.ip}:{self.port} - CTRL+C to stop")
-        self.server.serve_forever()
+        thread = threading.Thread(target=self.server.serve_forever)
+        thread.start()
 
     def stop(self):
         log.info("Stop signal received..")
