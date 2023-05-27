@@ -45,8 +45,11 @@ class Dota2RuneRemainder:
     def setup(self):
         self.q = queue.Queue()
         self.tracked_events = []
-        for event in self.config.get("events"):
-           self.tracked_events.append(CountDown(Event.create_from_dict(**event)))
+        
+        events = self.config.get("events")
+        if events is not None:
+            for event in events:
+                self.tracked_events.append(CountDown(Event.create_from_dict(**event)))
 
         self.server = ServerManager(q = self.q)
         self.server.run()
