@@ -1,15 +1,13 @@
-import pyttsx3
+from dataclasses import dataclass
 
+@dataclass
 class Event:
-
-    def __init__(self, name: str, amount: float, recurring: bool = True) -> None:
-        self.name = name
-        self.amount = amount
-        self.recurring = recurring
-        self.tts = pyttsx3.init()
-        self.tts.runAndWait()
-
-
-    def alarm(self):
-        print(f"emitting sound for {self.name}")
-        self.tts.say(self.name)
+    name: str
+    amount: int
+    sentence: str
+    offset: int = 15
+    recurring: bool = True
+    
+    @classmethod
+    def create_from_dict(cls, **kwarg):
+        return Event(**kwarg)
