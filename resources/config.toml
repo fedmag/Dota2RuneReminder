@@ -1,0 +1,26 @@
+[project]
+name = "Dota2RuneRemainder"
+
+[general]
+    dota2path = "a path to your installation"
+
+[[events]]
+    offset = 15
+    sentence = "Wisdom rune spawing"
+    recurring = false
+    name = "Wisdom"
+    amount = 420
+
+[[events]]
+    offset = 15
+    sentence = "Gold rune spawing"
+    recurring = false
+    name = "Gold"
+    amount = 180
+
+[[events]]
+    offset = 15
+    sentence = "Lotus rune spawing"
+    recurring = false
+    name = "Lotus"
+    amount = 1200
