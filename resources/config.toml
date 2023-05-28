@@ -2,7 +2,9 @@
 name = "Dota2RuneRemainder"
 
 [general]
-    dota2path = "a path to your installation"
+    # path to your dota installation. This path must point to "....\\dota 2 beta\\game\\dota"
+    # it is extremely important to use " (NOT ') and to use double slashes \\ (NOT \ or /)
+    dota2path = "your path\\SteamLibrary\\steamapps\\common\\dota 2 beta\\game\\dota"
 
 [[events]]
     offset = 15
@@ -13,14 +15,14 @@ name = "Dota2RuneRemainder"
 
 [[events]]
     offset = 15
-    sentence = "Gold rune spawing"
-    recurring = false
-    name = "Gold"
+    sentence = "Gold rune and Lotus  spawing"
+    recurring = true
+    name = "Gold and lotus"
     amount = 180
 
 [[events]]
     offset = 15
-    sentence = "Lotus rune spawing"
+    sentence = "Tormentor spawing"
     recurring = false
-    name = "Lotus"
+    name = "Tormentor"
     amount = 1200
