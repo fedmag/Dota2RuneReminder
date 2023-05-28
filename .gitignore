@@ -47,3 +47,4 @@ dist/**
 package.nls.*.json
 l10n/
 .vscode/**
+output

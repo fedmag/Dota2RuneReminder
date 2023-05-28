@@ -10,6 +10,8 @@ import os
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("comtypes").setLevel(logging.WARNING)
 log = logging.getLogger(__name__)
+
+log.info(f"WDR: {os.getcwd()}")
 config: Dict = toml.load("resources/config.toml")
 
 if __name__ == "__main__":
@@ -42,7 +44,7 @@ if __name__ == "__main__":
     )
 
     icon.menu = (
-        pystray.MenuItem("Start", start),
+        pystray.MenuItem("Start", start, default=True),
         pystray.MenuItem("Stop", stop),
         pystray.MenuItem("Exit", exit_program),
     )
