@@ -69,7 +69,6 @@ class Dota2RuneRemainder:
         self.setup()      
         while True:
             if not self.__stop_event.is_set(): 
-                # log.info(f"{self.__stop_event.is_set()}")
                 try:
                     state: str = self.q.get(block=False)
                     [handler.handle_state(state) for handler in self.handlers]
