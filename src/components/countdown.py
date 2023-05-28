@@ -7,7 +7,7 @@ log = logging.getLogger(__name__)
 class CountDown:
 
     def __init__(self, event: Event) -> None:
-        log.info(f"Setting up timer for {event.name}")
+        log.info(f"Setting up timer for event: {event}")
         self.__event = event
         self.__last_played: int = 0
     

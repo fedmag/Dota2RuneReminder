@@ -29,18 +29,20 @@ if __name__ == "__main__":
     
     dota2remainder = Dota2RuneRemainder(config)
     
-    def start(): dota2remainder.change_running_state(True)
+    def start(): 
+        if not dota2remainder.is_running(): dota2remainder.change_running_state(True)
         
-    def stop(): dota2remainder.change_running_state(False)
+    def stop(): 
+        if dota2remainder.is_running(): dota2remainder.change_running_state(False)
         
     def exit_program():
-        dota2remainder.change_running_state(False)
+        if dota2remainder.is_running(): stop()
         icon.stop()
         os._exit(1)
     
     icon = pystray.Icon(
         name='Doata2RuneRemainder',
-        icon=create_image(64, 64, 'black', 'white')
+        icon=Image.open("resources/icon.ico")
     )
 
     icon.menu = (

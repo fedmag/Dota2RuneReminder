@@ -13,16 +13,9 @@ name = "Dota2RuneRemainder"
 
 [[events]]
     offset = 15
-    sentence = "Gold rune spawing"
+    sentence = "Gold and lotus runes spawing"
     recurring = false
     name = "Gold"
-    amount = 180
-
-[[events]]
-    offset = 15
-    sentence = "Lotus spawing"
-    recurring = false
-    name = "Lotus"
     amount = 180
 
 [[events]]

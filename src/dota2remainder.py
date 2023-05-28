@@ -22,6 +22,9 @@ class Dota2RuneRemainder:
         self.config: Dict = config
         self.q = queue.Queue()
         
+    def is_running(self):
+        return self.__running
+    
     def change_running_state(self, run: bool):
         self.__running = run
         log.info(f"Running state changed to: {run}")
