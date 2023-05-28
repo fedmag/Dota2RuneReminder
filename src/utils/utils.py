@@ -36,7 +36,6 @@ def prepare_for_gsi_integration(dota_path: str):
             "items"     "1"
         }
     }"""
-    print(dota_path)
     filepath = os.path.join(dota_path, "cfg\\gamestate_integration")
     if not os.path.exists(filepath):
         os.makedirs(filepath)
