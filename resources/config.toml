@@ -8,21 +8,21 @@ name = "Dota2RuneRemainder"
 
 [[events]]
     offset = 15
-    sentence = "Wisdom rune spawing"
+    sentence = "Wisdom rune spawning"
     recurring = true
     name = "Wisdom"
     amount = 420
 
 [[events]]
     offset = 15
-    sentence = "Gold rune and Lotus  spawing"
+    sentence = "Gold rune and Lotus  spawning"
     recurring = true
     name = "Gold and lotus"
     amount = 180
 
 [[events]]
     offset = 15
-    sentence = "Tormentor spawing"
+    sentence = "Tormentor spawning"
     recurring = false
     name = "Tormentor"
     amount = 1200
