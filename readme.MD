@@ -16,7 +16,7 @@ If you want to build it from this repo:
 1. Clone the repo
 2. Install the dependencies running 
 
-        pip install requirements.txt
+        pip install -r requirements.txt
 3. Modify the config,toml that resides under the resource folder. Specifically, set:
    
         dota2path = "your\\installatiom\\path"
@@ -36,7 +36,7 @@ In this case you do not need a python installation in your pc as it is bundled i
 
 1. Download the .zip file
 2. Extract the content in a folder
-3. Open the extract folder and modify the config,toml that resides under the resource folder. Specifically, set:
+3. Open the extract folder and modify the config.toml that resides under the resource folder. Specifically, set:
    
         dota2path = "your\\installatiom\\path"
     
