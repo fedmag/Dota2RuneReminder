@@ -9,7 +9,7 @@ name = "Dota2RuneRemainder"
 [[events]]
     offset = 15
     sentence = "Wisdom rune spawing"
-    recurring = false
+    recurring = true
     name = "Wisdom"
     amount = 420
 
