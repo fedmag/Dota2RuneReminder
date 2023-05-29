@@ -21,7 +21,7 @@ If you want to build it from this repo:
    
         dota2path = "your\\installatiom\\path"
     
-    it is important to keep the double quuotes and to double the quotes. The path should point to the "dota" folder which usually if found under 
+    it is important to keep the double quotes and to double the slashes. The path should point to the "dota" folder which usually if found under 
         
         "...\steamapps\common\dota 2 beta\game\dota" 
 
@@ -40,7 +40,7 @@ In this case you do not need a python installation in your pc as it is bundled i
    
         dota2path = "your\\installatiom\\path"
     
-    it is important to keep the double quuotes and to double the quotes. The path should point to the "dota" folder which usually if found under 
+    it is important to keep the double quotes and to double the slashes. The path should point to the "dota" folder which usually if found under 
         
         "...\steamapps\common\dota 2 beta\game\dota" 
 
