@@ -5,10 +5,7 @@ from components.event_handlers.clock_handler import ClockEventHandler
 from sounds.speaker import Speaker
 from gsi.server import ServerManager
 
-import pystray
-from PIL import Image, ImageDraw
 import queue
-import toml
 import logging
 import threading
 

@@ -2,7 +2,6 @@
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer, HTTPServer
 import queue
 from json import loads as json_loads
-from typing import Any
 import threading
 import logging
 

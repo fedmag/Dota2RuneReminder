@@ -1,5 +1,4 @@
 from components.event import Event
-import time
 import logging
 
 log = logging.getLogger(__name__)
