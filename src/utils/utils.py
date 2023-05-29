@@ -4,6 +4,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
+
 def generate_alternative_icon(width, height, color1, color2):
     image = Image.new('RGB', (width, height), color1)
     dc = ImageDraw.Draw(image)
@@ -15,8 +16,16 @@ def generate_alternative_icon(width, height, color1, color2):
         fill=color2)
     return image
 
+
 def gsi_files_are_in_place(dota_path: str) -> bool:
-    return os.path.isfile(os.path.join(dota_path, "cfg\\gamestate_integration", "gamestate_integration_py.cfg"))
+    return os.path.isfile(
+        os.path.join(
+            dota_path,
+            "cfg\\gamestate_integration",
+            "gamestate_integration_py.cfg"
+            )
+        )
+
 
 def prepare_for_gsi_integration(dota_path: str):
     cfg_content = """"Python Dota 2 GSI Integration"
@@ -29,7 +38,7 @@ def prepare_for_gsi_integration(dota_path: str):
         "data"
         {
             "provider"  "1"
-            "map"       "1" 
+            "map"       "1"
             "player"    "1"
             "hero"      "1"
             "abilities" "1"
