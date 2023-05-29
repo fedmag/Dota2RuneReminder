@@ -30,8 +30,8 @@ class Dota2RuneRemainder:
             self.__stop_event.clear()
             t = threading.Thread(target=self.run)
             t.start()
-        else: 
-            self.__stop_event.set() 
+        else:
+            self.__stop_event.set()
             self.stop()
 
     def stop(self):
@@ -66,7 +66,7 @@ class Dota2RuneRemainder:
         self.speaker.say("Counters are set!")
 
     def run(self, ):
-        self.setup()     
+        self.setup()
         while True:
             if not self.__stop_event.is_set():
                 try:

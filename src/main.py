@@ -19,14 +19,14 @@ with open("resources/config.toml", "r") as file:
 
 if __name__ == "__main__":
 
-    log.info(""" 
+    log.info("""
         888888ba             dP            d8888b.  888888ba                              888888ba                      oo                dP                   
         88    `8b            88                `88  88    `8b                             88    `8b                                       88                   
         88     88 .d8888b. d8888P .d8888b. .aaadP' a88aaaa8P' dP    dP 88d888b. .d8888b. a88aaaa8P' .d8888b. 88d8b.d8b. dP 88d888b. .d888b88 .d8888b. 88d888b. 
         88     88 88'  `88   88   88'  `88 88'      88   `8b. 88    88 88'  `88 88ooood8  88   `8b. 88ooood8 88'`88'`88 88 88'  `88 88'  `88 88ooood8 88'  `88 
         88    .8P 88.  .88   88   88.  .88 88.      88     88 88.  .88 88    88 88.  ...  88     88 88.  ... 88  88  88 88 88    88 88.  .88 88.  ... 88       
         8888888P  `88888P'   dP   `88888P8 Y88888P  dP     dP `88888P' dP    dP `88888P'  dP     dP `88888P' dP  dP  dP dP dP    dP `88888P8 `88888P' dP       
-             """)
+    """)
 
     try:
         icon_img = Image.open("resources/icon.ico")
