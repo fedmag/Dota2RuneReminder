@@ -11,7 +11,7 @@ import threading
 
 log = logging.getLogger(__name__)
 
-class Dota2RuneRemainder:
+class Dota2RuneReminder:
     
     def __init__(self, config: Dict) -> None:
         self.__running = False
