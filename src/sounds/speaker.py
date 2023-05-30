@@ -3,12 +3,11 @@ import logging
 
 log = logging.getLogger(__name__)
 
+
 class Speaker:
 
     def __init__(self) -> None:
         self.tts = pyttsx3.init()
-        self.__running = True
-        
 
     def say(self, sentence: str) -> None:
         log.info(f"Saying: {sentence}")
@@ -18,9 +17,7 @@ class Speaker:
         except RuntimeError as e:
             log.error("Loop already running...")
             log.error(e)
-            
-            
-        
+
     def stop(self):
         log.info("Stopping tts..")
         self.tts.stop()
